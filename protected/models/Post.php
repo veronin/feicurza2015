@@ -50,8 +50,12 @@ class Post extends CActiveRecord
                 );
         
 	}
-
-	/**
+        public function normalizeTags($attribute, $params)
+        {
+            $this->tags=Tag::array2string(array_unique(Tag::string2array($this->tags)));
+        }
+	
+        /**
 	 * @return array relational rules.
 	 */
 	public function relations()
