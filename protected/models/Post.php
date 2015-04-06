@@ -1,26 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "{{user}}".
+ * This is the model class for table "{{post}}".
  *
- * The followings are the available columns in table '{{user}}':
+ * The followings are the available columns in table '{{post}}':
  * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $email
- * @property string $profile
+ * @property string $title
+ * @property string $content
+ * @property string $tags
+ * @property integer $status
+ * @property integer $create_time
+ * @property integer $update_time
+ * @property integer $author_id
  *
  * The followings are the available model relations:
- * @property Post[] $posts
+ * @property User $author
+ * @property Comment[] $comments
  */
-class User extends CActiveRecord
+class Post extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{user}}';
+		return '{{post}}';
 	}
 
 	/**
@@ -31,13 +35,20 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
-			array('profile', 'safe'),
+			array('title, content, status', 'required'),
+			array('status', 'in', 'range'=> array(1,2,3)),             
+			array('title', 'length', 'max'=>128),
+			array('tags', 'normalizeTags'),
+                        array('tags', 'match', 'pattern'=>'/^[\w\s,]+$/',
+                              'message'=>'Tags can only contain word characters.'),
+                    
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email, profile', 'safe', 'on'=>'search'),
-		);
+			array('title, status', 'safe', 'on'=>'search'),
+		
+                       
+                );
+        
 	}
 
 	/**
@@ -48,7 +59,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'posts' => array(self::HAS_MANY, 'Post', 'author_id'),
+			'author' => array(self::BELONGS_TO, 'User', 'author_id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'post_id'),
 		);
 	}
 
@@ -59,10 +71,13 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
-			'profile' => 'Profile',
+			'title' => 'Title',
+			'content' => 'Content',
+			'tags' => 'Tags',
+			'status' => 'Status',
+			'create_time' => 'Create Time',
+			'update_time' => 'Update Time',
+			'author_id' => 'Author',
 		);
 	}
 
@@ -85,10 +100,13 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('profile',$this->profile,true);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('content',$this->content,true);
+		$criteria->compare('tags',$this->tags,true);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('create_time',$this->create_time);
+		$criteria->compare('update_time',$this->update_time);
+		$criteria->compare('author_id',$this->author_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -99,23 +117,10 @@ class User extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return Post the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-        
-        /* Validacion de clave chequeando la base */
-        
-        public function validatePassword($password)
-        {
-                return CPasswordHelper::verifyPassword($password,$this->password);
-        }
-        
-        public function hashPassword($password)
-        {
-                return CPasswordHelper::hashPassword($password);
-        }
-         
 }

@@ -1,26 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "{{user}}".
+ * This is the model class for table "{{lookup}}".
  *
- * The followings are the available columns in table '{{user}}':
+ * The followings are the available columns in table '{{lookup}}':
  * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $email
- * @property string $profile
- *
- * The followings are the available model relations:
- * @property Post[] $posts
+ * @property string $name
+ * @property integer $code
+ * @property string $type
+ * @property integer $position
  */
-class User extends CActiveRecord
+class Lookup extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{user}}';
+		return '{{lookup}}';
 	}
 
 	/**
@@ -31,12 +28,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
-			array('profile', 'safe'),
+			array('name, code, type, position', 'required'),
+			array('code, position', 'numerical', 'integerOnly'=>true),
+			array('name, type', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email, profile', 'safe', 'on'=>'search'),
+			array('id, name, code, type, position', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +45,6 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'posts' => array(self::HAS_MANY, 'Post', 'author_id'),
 		);
 	}
 
@@ -59,10 +55,10 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
-			'profile' => 'Profile',
+			'name' => 'Name',
+			'code' => 'Code',
+			'type' => 'Type',
+			'position' => 'Position',
 		);
 	}
 
@@ -85,10 +81,10 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('profile',$this->profile,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('code',$this->code);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('position',$this->position);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -99,23 +95,10 @@ class User extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return Lookup the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-        
-        /* Validacion de clave chequeando la base */
-        
-        public function validatePassword($password)
-        {
-                return CPasswordHelper::verifyPassword($password,$this->password);
-        }
-        
-        public function hashPassword($password)
-        {
-                return CPasswordHelper::hashPassword($password);
-        }
-         
 }
