@@ -25,7 +25,8 @@ class Comment extends CActiveRecord
 	{
 		return '{{comment}}';
 	}
-
+        const STATUS_PENDING=1;
+        const STATUS_APPROVED=2;
 	/**
 	 * @return array validation rules for model attributes.
 	 */

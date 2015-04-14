@@ -26,10 +26,10 @@ class Post extends CActiveRecord
 	{
 		return '{{post}}';
 	}
-
+        public $nusuario;
 	/**
 	 * @return array validation rules for model attributes.
-	 */
+	*/
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -44,9 +44,9 @@ class Post extends CActiveRecord
                     
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('title, status', 'safe', 'on'=>'search'),
-		
-                       
+			
+                        //Agrego nusuario para que forme parte de los campos a buscar
+                        array('title, status, nusuario', 'safe', 'on'=>'search'),           
                 );
         
 	}
@@ -64,7 +64,11 @@ class Post extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'author' => array(self::BELONGS_TO, 'User', 'author_id'),
-			'comments' => array(self::HAS_MANY, 'Comment', 'post_id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'post_id',
+                            'condition'=>'comments.status='.Comment::STATUS_APPROVED,
+                            'order'=>'comments.create time DESC'),
+                        'commentCount' => array(self::STAT, 'Comment', 'post_id',
+                            'condition'=>'status='.Comment::STATUS_APPROVED),
 		);
 	}
 
@@ -75,6 +79,7 @@ class Post extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+                        'nusuario' => 'User Name',
 			'title' => 'Title',
 			'content' => 'Content',
 			'tags' => 'Tags',
@@ -85,6 +90,12 @@ class Post extends CActiveRecord
 		);
 	}
 
+        public function getNombreUsuario()
+        {
+            if ($this->author != null)
+            { return "<b>".$this->author->username."</b>";}
+            else {return '';}
+        }        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -102,7 +113,13 @@ class Post extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                
+                // Uso la relacion para buscar
+                $criteria->with=array('author');
+                
+                //Comparo con el campo que se lleno para la busqueda 
+                $criteria->compare('author.username',$this->nusuario, true);
+                
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('content',$this->content,true);
@@ -127,4 +144,12 @@ class Post extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function getUrl()
+        {
+        return Yii::app()->createUrl('post/view', array('id'=>$this->id,'title'=>$this->title,));
+        }
+        
+        
+        
 }

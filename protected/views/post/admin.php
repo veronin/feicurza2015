@@ -49,9 +49,35 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'title',
 		'content',
 		'tags',
-		'status',
-		'create_time',
+		//'status',
+            /*Referencias a un atributo virtual del modelo getNombreUsuario
+                para que aparezca en el search debe estar en el MODELO
+                'nombreUsuario',*/
+            /*Atributo virtual con atributos de CDataColumn o
+                'nombreUsuario:raw' 
+		array(
+                    'header'=>'User Atrib.Virtual',
+                    'name'=>'nombreUsuario',
+                    'type'=>'raw' ),   */
+            
+                array(
+                    'filter'=>array('admin'=>'admin', 'demo'=>'demo', 'vero'=>'vero'),
+                    'name'=>'nusuario',
+                    'value'=>'$data->author->username',
+                ),     
+            /*Referencia a la relacion del modelo
+                'author.username',*/
+                array(
+                    'header'=>'User Relacion',
+                    'value'=>'$data->author->username',
+                ),
+                array(
+                'header'=>'Create Time',
+                'name'=>'create_time',
+                'type'=>'datetime'
+                ),
 		/*
+                'create_time', 
 		'update_time',
 		'author_id',
 		*/
