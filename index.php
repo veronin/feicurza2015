@@ -1,3 +1,4 @@
+<link rel="icon" href="images/curza.gif">
 <?php
 
 // change the following paths if necessary

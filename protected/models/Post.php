@@ -131,6 +131,15 @@ class Post extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                        'sort'=>array(
+                            'attributes'=>array(
+                                'nusuario'=>array(
+                                        'asc'=>'author.username',
+                                        'desc'=>'author.username DESC',
+                                ),
+                            '*',
+                            ),
+                        ),
 		));
 	}
 

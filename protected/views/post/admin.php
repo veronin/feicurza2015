@@ -83,6 +83,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		*/
 		array(
 			'class'=>'CButtonColumn',
+                        //'template'=> '{view}{update}',
+                        'afterDelete'=>'function(link,success,data){ if(success) alert(data); }',
 		),
 	),
 )); ?>

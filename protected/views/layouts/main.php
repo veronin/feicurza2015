@@ -23,8 +23,14 @@
 <div class="container" id="page">
 
 	<div id="header">
+                <img id="logo1" src=images/curza.gif alt="Logo CURZA" height="60">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+                <div id="dire">Tecnicatura Universitaria en Desarrollo Web<br>
+                Framework e Interoperatividad<br>
+                </div>
+        
+       
+        </div><!-- header -->
 
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
@@ -49,8 +55,9 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by VERONIN.<br/>
-		All Rights Reserved.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> by Ver&#243;nica Nin<br/>
+                <a href="http://www.uncoma.edu.ar/">Universidad Nacional del Comahue</a><br/>
+		All Rights Reserved<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 
