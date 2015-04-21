@@ -37,6 +37,24 @@
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'profile'); ?>
+		<?php echo $form->textArea($model,'profile',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'profile'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'edad'); ?>
+		<?php echo $form->textField($model,'edad'); ?>
+		<?php echo $form->error($model,'edad'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'fechaNac'); ?>
+		<?php echo $form->textField($model,'fechaNac'); ?>
+		<?php echo $form->error($model,'fechaNac'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

@@ -1999,3 +1999,47 @@ Stack trace:
 REQUEST_URI=/feicurza2015/index.php?r=site/login
 HTTP_REFERER=http://localhost/feicurza2015/index.php?r=site/login
 ---
+2015/04/20 12:23:37 [error] [exception.CException] exception 'CException' with message 'BaseUser and its behaviors do not have a method or closure named "validatePassword".' in /var/www/feicurza2015/yii-1.1.16.bca042/framework/base/CComponent.php:266
+Stack trace:
+#0 /var/www/feicurza2015/yii-1.1.16.bca042/framework/db/ar/CActiveRecord.php(227): CComponent->__call('validatePasswor...', Array)
+#1 /var/www/feicurza2015/protected/components/UserIdentity.php(16): CActiveRecord->__call('validatePasswor...', Array)
+#2 /var/www/feicurza2015/protected/components/UserIdentity.php(16): BaseUser->validatePassword('demo')
+#3 /var/www/feicurza2015/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#4 /var/www/feicurza2015/yii-1.1.16.bca042/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#5 /var/www/feicurza2015/yii-1.1.16.bca042/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#6 /var/www/feicurza2015/yii-1.1.16.bca042/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), NULL)
+#7 /var/www/feicurza2015/protected/controllers/SiteController.php(94): CModel->validate()
+#8 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/actions/CInlineAction.php(49): SiteController->actionLogin()
+#9 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#10 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#11 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CWebApplication.php(282): CController->run('login')
+#13 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#14 /var/www/feicurza2015/yii-1.1.16.bca042/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#15 /var/www/feicurza2015/index.php(14): CApplication->run()
+#16 {main}
+REQUEST_URI=/feicurza2015/index.php?r=site/login
+HTTP_REFERER=http://localhost/feicurza2015/index.php?r=site/login
+---
+2015/04/20 12:40:10 [error] [exception.CException] exception 'CException' with message 'BaseUser and its behaviors do not have a method or closure named "validatePassword".' in /var/www/feicurza2015/yii-1.1.16.bca042/framework/base/CComponent.php:266
+Stack trace:
+#0 /var/www/feicurza2015/yii-1.1.16.bca042/framework/db/ar/CActiveRecord.php(227): CComponent->__call('validatePasswor...', Array)
+#1 /var/www/feicurza2015/protected/components/UserIdentity.php(16): CActiveRecord->__call('validatePasswor...', Array)
+#2 /var/www/feicurza2015/protected/components/UserIdentity.php(16): BaseUser->validatePassword('demo')
+#3 /var/www/feicurza2015/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#4 /var/www/feicurza2015/yii-1.1.16.bca042/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#5 /var/www/feicurza2015/yii-1.1.16.bca042/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#6 /var/www/feicurza2015/yii-1.1.16.bca042/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), NULL)
+#7 /var/www/feicurza2015/protected/controllers/SiteController.php(94): CModel->validate()
+#8 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/actions/CInlineAction.php(49): SiteController->actionLogin()
+#9 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#10 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#11 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CWebApplication.php(282): CController->run('login')
+#13 /var/www/feicurza2015/yii-1.1.16.bca042/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#14 /var/www/feicurza2015/yii-1.1.16.bca042/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#15 /var/www/feicurza2015/index.php(14): CApplication->run()
+#16 {main}
+REQUEST_URI=/feicurza2015/index.php?r=site/login
+HTTP_REFERER=http://localhost/feicurza2015/index.php?r=site/login
+---

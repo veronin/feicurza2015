@@ -9,6 +9,8 @@
  * @property string $password
  * @property string $email
  * @property string $profile
+ * @property integer $edad
+ * @property string $fechaNac
  *
  * The followings are the available model relations:
  * @property Post[] $posts
@@ -32,11 +34,12 @@ class BaseUser extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password, email', 'required'),
+			array('edad', 'numerical', 'integerOnly'=>true),
 			array('username, password, email', 'length', 'max'=>128),
-			array('profile', 'safe'),
+			array('profile, fechaNac', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email, profile', 'safe', 'on'=>'search'),
+			array('id, username, password, email, profile, edad, fechaNac', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +66,8 @@ class BaseUser extends CActiveRecord
 			'password' => 'Password',
 			'email' => 'Email',
 			'profile' => 'Profile',
+			'edad' => 'Edad',
+			'fechaNac' => 'Fecha Nac',
 		);
 	}
 
@@ -89,6 +94,8 @@ class BaseUser extends CActiveRecord
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('profile',$this->profile,true);
+		$criteria->compare('edad',$this->edad);
+		$criteria->compare('fechaNac',$this->fechaNac,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -99,7 +106,7 @@ class BaseUser extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return BaseUser the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
