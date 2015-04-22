@@ -11,7 +11,7 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-
+        'language'=>'es_ar', 
 	// autoloading model and component classes
 	'import'=>array(
                 //'application.models._base.*',
@@ -39,7 +39,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-
+                'format'=>array('class'=> 'CLocalizedFormatter'),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(
