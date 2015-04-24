@@ -2,6 +2,7 @@
 
 class User extends BaseUser
 {
+           
     /* Validacion de clave chequeando la base */
         
         public function validatePassword($password)
@@ -24,10 +25,7 @@ class User extends BaseUser
         {
            return count($this->post);
         }
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+	
         /**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -63,5 +61,31 @@ class User extends BaseUser
 			'criteria'=>$criteria,
 		));
 	}
-
+        
+        public function afterFind() {
+            if(!empty($this->fechaNac)){
+                $this->fechaNac = yii::app()->format->date(strtotime($this->fechaNac));
+            }
+            return parent::afterFind();
+        }
+        
+        public function beforeValidate() {
+               if(!empty($this->fechaNac)&& CDateTimeParser::parse($this->fechaNac, yii::app()->locale->dateFormat)){
+                   $this->fechaNac = date('Y-m-d',CDateTimeParser::parse($this->fechaNac, yii::app()->locale->dateFormat));
+               }
+               
+            return parent::beforeValidate();
+        }
+        
+        public function rules()
+	{
+		return CMap::mergeArray(parent::rules(), array(
+			array('fechaNac', 'date', 'format' => 'yyyy-MM-dd')
+                    ));
+        }
+        
+        public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
 }

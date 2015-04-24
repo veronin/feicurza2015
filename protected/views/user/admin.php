@@ -52,8 +52,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'username',
 		//'password',
-                
-                array(  'type'=>'date',
+                 
+                array(  //'type'=>'date', se aplica ahora el afterFind
                         'name'=>'fechaNac',
                         //'value'=>'$data->fechaNac!=null?date("d/m/y", strtotime($data->fechaNac)):""',
                         
