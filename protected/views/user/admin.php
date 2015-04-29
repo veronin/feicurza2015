@@ -47,20 +47,22 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'id'=>'user-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-        'afterAjaxUpdate'=>"function(){jQuery('#User_fechaNac').datepicker($.datepicker.regional[ 'es' ])}",
+//        'afterAjaxUpdate'=>"function(){jQuery('#User_fechaNac').datepicker($.datepicker.regional['es'])}",
 	'columns'=>array(
 		'id',
 		'username',
+                
+         
 		//'password',
                  
                 array(  //'type'=>'date', se aplica ahora el afterFind
                         'name'=>'fechaNac',
-                        //'value'=>'$data->fechaNac!=null?date("d/m/y", strtotime($data->fechaNac)):""',
+                        'value'=>'$data->fechaNac!=null?date("d/m/Y", strtotime($data->fechaNac)):""',
                         
                         'filter'=>$this->widget('zii.widgets.jui.CJuiDatePicker',array(
                                 //'name'=>'publishDate',
                                 'model'=>$model,
-                                'attribute'=>'fechaNac',
+                                'attribute'=>'xfechaNac',
                                 'language'=>'es',
                                 // additional javascript options for the date picker plugin
                                 'options'=>array(
@@ -71,12 +73,13 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                                 ),
                             ),true)
                         
-                ),  
+                ), 
                 'email',
 		array(
 			'class'=>'CButtonColumn',
 		),
 	),
 )); 
+$this->widget('application.extensions.primerWidget.PrimerWidget', array('mensaje'=>'otromsg'));
 
 ?>

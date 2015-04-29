@@ -65,14 +65,17 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'error, warning, profile, trace',
 				),
 				// uncomment the following to show log messages on web pages
-				/*
+				
 				array(
 					'class'=>'CWebLogRoute',
+                                        'categories'=>'system.db.*',
+                                        'showInFireBug'=>true,
+                                        'ignoreAjaxInFireBug'=>false,
 				),
-				*/
+				
 			),
 		),
 

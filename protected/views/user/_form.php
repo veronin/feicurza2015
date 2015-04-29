@@ -50,9 +50,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'fechaNac'); ?>
-		<?php echo $form->textField($model,'fechaNac'); ?>
-		<?php echo $form->error($model,'fechaNac'); ?>
+		<?php echo $form->labelEx($model,'xfechaNac'); ?>
+		<?php echo $form->textField($model,'xfechaNac'); ?>
+		<?php echo $form->error($model,'xfechaNac'); ?>
 	</div>
 
 	<div class="row buttons">

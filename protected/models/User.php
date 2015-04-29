@@ -25,43 +25,25 @@ class User extends BaseUser
         {
            return count($this->post);
         }
-	
-        /**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('profile',$this->profile,true);
-		$criteria->compare('edad',$this->edad);
-		//$criteria->compare('fechaNac',$this->fechaNac,true);
-                //Compara fechas con formato de fecha
+            $tmpFechaNac=$this->xfechaNac;
+            $this->fechaNac='';
+            $provider=parent::search();
+            
+                $this->fechaNac=$tmpFechaNac;   
+	
+                $criteria=new CDbCriteria;
+                
                 if (!empty($this->fechaNac))
                 {
                     $criteria->compare('fechaNac', date('Y-m-d', CDateTimeParser::parse($this->fechaNac, yii::app()->locale->dateFormat)));
                 }
+                $provider->getCriteria()->mergeWith($criteria);
                 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-        
+            return $provider;
+        }
+        /*
         public function afterFind() {
             if(!empty($this->fechaNac)){
                 $this->fechaNac = yii::app()->format->date(strtotime($this->fechaNac));
@@ -76,11 +58,25 @@ class User extends BaseUser
                
             return parent::beforeValidate();
         }
+        */
+        public function getXfechaNac() {
+            if(!empty($this->fechaNac)&& CDateTimeParser::parse($this->fechaNac, 'yyyy-MM-dd')){
+            $nacimiento = yii::app()->format->date(strtotime($this->fechaNac));
+            return $nacimiento;            
+        }else return $this->fechaNac;
+        }
+        public function setXfechaNac($value) {
+             if(!empty($value)&& CDateTimeParser::parse($value, yii::app()->locale->dateFormat)){   
+             $this->fechaNac = date('Y-m-d',CDateTimeParser::parse($value, yii::app()->locale->dateFormat));
+             
+             }else { $this->fechaNac = $value;}
+        }
         
         public function rules()
 	{
 		return CMap::mergeArray(parent::rules(), array(
-			array('fechaNac', 'date', 'format' => 'yyyy-MM-dd')
+			array('fechaNac', 'date', 'format' => 'yyyy-MM-dd'),
+                        array('xfechaNac', 'safe'),
                     ));
         }
         
